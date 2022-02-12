@@ -8,7 +8,7 @@ def update_recipe(id: int, request_body: schema.New_Recipe, db: Session):
     if db.query(model.Recipe).filter(model.Recipe.id==id).first() is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail=f"recipe with {id=} not found"
+            detail=f"recipe {id=} not found"
             )
     db.query(model.Recipe).filter(model.Recipe.id==id).update(
         {
@@ -43,7 +43,7 @@ def update_user(id: int, request_body: schema.Login, db: Session):
     if db.query(model.User).filter(model.User.id==id).first() is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail=f"user with {id=} not found"
+            detail=f"user {id=} not found"
             )
     if db.query(model.User).filter(model.User.username==request_body.username).first():
         raise HTTPException(

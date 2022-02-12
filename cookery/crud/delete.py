@@ -13,7 +13,7 @@ def delete_recipe(id: int, db: Session):
         db.commit()
         return Response(status_code=status.HTTP_204_NO_CONTENT)
 
-    raise HTTPException(detail=f"recipe with {id=} not found", status_code=status.HTTP_404_NOT_FOUND)
+    raise HTTPException(detail=f"recipe {id=} not found", status_code=status.HTTP_404_NOT_FOUND)
 
 def delete_user(id: int, db: Session):
     if db.query(model.User).filter(model.User.id==id).first():
@@ -29,4 +29,4 @@ def delete_user(id: int, db: Session):
         db.commit()
         return Response(status_code=status.HTTP_204_NO_CONTENT)
 
-    raise HTTPException(detail=f"user with {id=} not found", status_code=status.HTTP_404_NOT_FOUND)
+    raise HTTPException(detail=f"user {id=} not found", status_code=status.HTTP_404_NOT_FOUND)

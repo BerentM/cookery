@@ -7,7 +7,7 @@ def add_recipe(request_body, db):
     if db.query(model.Recipe).filter(model.Recipe.name==request_body.name).first():
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST, 
-            detail=f"recipe with {request_body.name=} already exists"
+            detail=f"recipe {request_body.name=} already exists"
             )
     recipe = model.Recipe(name=request_body.name, user_id=request_body.user_id)
     db.add(recipe)
@@ -41,7 +41,7 @@ def add_user(request_body, db):
     if db.query(model.User).filter(model.User.username==request_body.username).first():
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST, 
-            detail=f"user with {request_body.username=} already exists"
+            detail=f"user {request_body.username=} already exists"
             )
     new_user = model.User(username=request_body.username, password=hashed_password)
     db.add(new_user)
