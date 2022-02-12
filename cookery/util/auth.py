@@ -10,7 +10,7 @@ from passlib.context import CryptContext
 
 PWD_CONTEXT = CryptContext(schemes=['bcrypt'], deprecated='auto')
 CONF = configparser.ConfigParser()
-CONF.read('cookery\data\config.ini')
+CONF.read('cookery\config.ini')
 
 # token reqirements
 SECRET_KEY = CONF['auth']['secret_key']

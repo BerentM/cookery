@@ -17,7 +17,7 @@ def get_user(id: int, db: Session = Depends(get_db), current_user: schema.User =
     return read.get_user(id, db)
 
 @router.post('/new', status_code=status.HTTP_201_CREATED)
-def new_user(request: schema.Login, db: Session = Depends(get_db), current_user: schema.User = Depends(auth.JWT.verify_token)):
+def new_user(request: schema.Login, db: Session = Depends(get_db)):
     return create.add_user(request, db)
 
 @router.delete('/{id}')
