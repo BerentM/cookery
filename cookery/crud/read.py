@@ -10,7 +10,7 @@ def single_recipe(id: int, db: Session) -> dict:
     if recipe is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail=f"recipe with {id=} not found"
+            detail=f"recipe {id=} not found"
             )
     return schema.Recipe(
             name=recipe.name,
@@ -71,13 +71,13 @@ def get_user(id: int, db: Session) -> dict:
     if user is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail=f"username with {id=} not found"
+            detail=f"username {id=} not found"
             )
     return schema.User(username=user.username)
 
 def about() -> dict:
     return {
-        'purpose': 'This API was created to provide comfortable solution for cooking recipes storage and menagment.',
-        'usage': 'Look at /docs page for all endponts documentation.',
+        'purpose': 'Cookery API was created to provide comfortable solution for storing cooking recipes.',
+        'usage': 'Look at /docs for endpoints documentation.',
         'tech_stack': 'Love, Python and FastAPI!'
     }
