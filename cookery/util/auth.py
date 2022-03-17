@@ -10,7 +10,7 @@ from passlib.context import CryptContext
 
 PWD_CONTEXT = CryptContext(schemes=['bcrypt'], deprecated='auto')
 CONF = configparser.ConfigParser()
-CONF.read('cookery\config.ini')
+CONF.read(r'cookery\config.ini')
 
 # token reqirements
 SECRET_KEY = CONF['auth']['secret_key']
@@ -20,22 +20,25 @@ ACCESS_TOKEN_EXPIRE_MINUTES = 30
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl='login')
 
 class Hash:
+    @staticmethod
     def hash_password(password: str) -> str:
         return PWD_CONTEXT.hash(password)
-        
+
+    @staticmethod
     def verify(password: str, hashed_password: str) -> bool:
         return PWD_CONTEXT.verify(password, hashed_password)
 
 
 class JWT:
+    @staticmethod
     def create(data: dict):
         to_encode = data.copy()
         expire = datetime.datetime.utcnow() + datetime.timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
         to_encode.update({"exp": expire})
         encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
         return encoded_jwt
- 
 
+    @staticmethod
     def verify_token(token: str = Depends(oauth2_scheme)):
         credentials_exception = HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -45,7 +48,7 @@ class JWT:
 
         try:
             payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-            username: str = payload.get('sub')
+            username: str | None = payload.get('sub')
             if username is None:
                 raise credentials_exception
         except JWTError:
