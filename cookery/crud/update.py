@@ -13,24 +13,23 @@ def update_recipe(id: int, request_body: schema.New_Recipe, db: Session):
     db.query(model.Recipe).filter(model.Recipe.id==id).update(
         {
             model.Recipe.name: request_body.name,
-            model.Recipe.added_by: request_body.added_by
-        }
-        ,synchronize_session=False)
+            model.Recipe.user_id: request_body.user_id
+        })
 
-    db.query(model.Ingredient).filter(model.Ingredient.recipe_id==id).delete(synchronize_session=False)
+    db.query(model.Ingredient).filter(model.Ingredient.recipe_id==id).delete()
     for item in request_body.description:
             description = model.Description(
                 order=item.order,
-                description=item.description, 
+                description=item.description,
                 recipe_id=id
                 )
             db.add(description)
-    
-    db.query(model.Description).filter(model.Description.recipe_id==id).delete(synchronize_session=False)
+
+    db.query(model.Description).filter(model.Description.recipe_id==id).delete()
     for item in request_body.ingredients:
         ingredients = model.Ingredient(
-            name=item.name, 
-            quantity=item.quantity, 
+            name=item.name,
+            quantity=item.quantity,
             recipe_id=id
             )
         db.add(ingredients)
@@ -50,12 +49,11 @@ def update_user(id: int, request_body: schema.Login, db: Session):
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=f"{request_body.username=} already taken"
             )
-    
+
     db.query(model.User).filter(model.User.id==id).update(
         {
             model.User.username: request_body.username,
             model.User.password: request_body.password,
-        }
-        ,synchronize_session=False)
+        })
     db.commit()
     return Response(status_code=status.HTTP_202_ACCEPTED)
