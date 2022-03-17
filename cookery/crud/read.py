@@ -3,9 +3,10 @@ from fastapi import HTTPException, status
 from fastapi.param_functions import Depends
 from sqlalchemy.orm import Session
 from cookery.util import model, schema
+from typing import TypedDict
 
 
-def single_recipe(id: int, db: Session) -> dict:
+def single_recipe(id: int, db: Session) -> schema.Recipe:
     recipe = db.query(model.Recipe).get(id)
     if recipe is None:
         raise HTTPException(
@@ -20,38 +21,38 @@ def single_recipe(id: int, db: Session) -> dict:
             description = recipe.description
     )
 
-def recipe_ingredients(id: int, db: Session) -> dict:
+def recipe_ingredients(id: int, db: Session) -> schema.Ingredient_List:
     def parse_ingredient(ingredient):
-        return {
-            "quantity": ingredient.quantity, 
-            "name": ingredient.name
-            } 
+        return schema.Ingredient(
+            quantity = ingredient.quantity,
+            name = ingredient.name
+            )
 
     recipe = single_recipe(id, db)
     ingredients = recipe.ingredients
 
-    return {
-        'recipe_id': id,
-        'ingredients': [parse_ingredient(ingredient) for ingredient in ingredients],
-        }
+    return schema.Ingredient_List(
+        recipe_id = id,
+        ingredients =  [parse_ingredient(ingredient) for ingredient in ingredients],
+        )
 
-def recipe_description(id: int, db: Session) -> dict:
+def recipe_description(id: int, db: Session)-> schema.Description_List:
     def parse_description(description):
-        return {
-            "order": description.order, 
-            "description": description.description
-            } 
+        return schema.Recipe_Description(
+            order = description.order,
+            description = description.description
+            )
 
     recipe = single_recipe(id, db)
-    descriptions = recipe.descriptions
+    descriptions = recipe.description
 
-    return {
-        'recipe_id': id,
-        'description': [parse_description(description) for description in descriptions],
-        }
+    return schema.Description_List(
+            recipe_id = id,
+            description = [parse_description(description) for description in descriptions],
+            )
 
 
-def recipe_list(id_from: int, id_to: int, db: Session) -> dict:
+def recipe_list(id_from: int, id_to: int, db: Session) -> list[schema.Recipe]:
     recipes = db.query(model.Recipe).order_by(model.Recipe.id).offset(id_from).limit(id_to).all()
     output = []
 
@@ -66,7 +67,7 @@ def recipe_list(id_from: int, id_to: int, db: Session) -> dict:
     return output
 
 
-def get_user(id: int, db: Session) -> dict:
+def get_user(id: int, db: Session) -> schema.User:
     user = db.query(model.User).get(id)
     if user is None:
         raise HTTPException(
