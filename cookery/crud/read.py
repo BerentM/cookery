@@ -1,9 +1,7 @@
 # TODO: change to classes
 from fastapi import HTTPException, status
-from fastapi.param_functions import Depends
 from sqlalchemy.orm import Session
 from cookery.util import model, schema
-from typing import TypedDict
 
 
 def single_recipe(id: int, db: Session) -> schema.Recipe:
