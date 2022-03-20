@@ -67,7 +67,6 @@ def recipe_list(id_from: int, id_to: int, db: Session) -> list[schema.Recipe]:
 
 def recipe_simple_list(db:Session) -> list[schema.Simple_Recipe]:
     recipes = db.query(model.Recipe).order_by(model.Recipe.id).all()
-    print(recipes)
     output = []
 
     for recipe in recipes:
