@@ -41,6 +41,16 @@ class Recipe(New_Recipe):
     class Config:
         orm_mode = True
 
+class Simple_Recipe(BaseModel):
+    id: int
+    name: str
+    difficulty: int
+    user_id: Optional[int]
+    #imgae: int
+
+    class Config:
+        orm_mode = True
+
 class Sucess(BaseModel):
     status_code: int
     info: str

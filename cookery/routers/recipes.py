@@ -20,6 +20,12 @@ def recipes_list(
         current_user: schema.User = Depends(auth.JWT.verify_token)):
     return read.recipe_list(id_from, id_to, db)
 
+@router.get('/list')
+def recipes_simple_list(
+        db: Session = Depends(get_db),
+        current_user: schema.User = Depends(auth.JWT.verify_token)):
+    return read.recipe_simple_list(db)
+
 @router.post('/new', status_code=status.HTTP_201_CREATED)
 async def add_recipe(recipe: schema.New_Recipe,
         db: Session = Depends(get_db),

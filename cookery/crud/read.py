@@ -15,6 +15,7 @@ def single_recipe(id: int, db: Session) -> schema.Recipe:
             name=recipe.name,
             id = recipe.id,
             user_id = recipe.user_id,
+            difficulty=recipe.difficulty,
             ingredients = recipe.ingredients,
             description = recipe.description
     )
@@ -63,6 +64,23 @@ def recipe_list(id_from: int, id_to: int, db: Session) -> list[schema.Recipe]:
             "description": recipe.description,
         })
     return output
+
+def recipe_simple_list(db:Session) -> list[schema.Simple_Recipe]:
+    recipes = db.query(model.Recipe).order_by(model.Recipe.id).all()
+    print(recipes)
+    output = []
+
+    for recipe in recipes:
+        output.append(
+            schema.Simple_Recipe(
+                id = recipe.id,
+                name = recipe.name,
+                difficulty = recipe.difficulty,
+                user_id = recipe.user_id,
+                )
+            )
+    return output
+
 
 
 def get_user(id: int, db: Session) -> schema.User:

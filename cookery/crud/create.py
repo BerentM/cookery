@@ -9,7 +9,8 @@ def add_recipe(request_body, db):
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=f"recipe {request_body.name=} already exists"
             )
-    recipe = model.Recipe(name=request_body.name, user_id=request_body.user_id)
+    recipe = model.Recipe(name=request_body.name, user_id=request_body.user_id,
+            difficulty=request_body.difficulty)
     db.add(recipe)
     db.commit()
     db.refresh(recipe)
