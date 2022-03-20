@@ -27,6 +27,7 @@ class Description_List(BaseModel):
 
 class New_Recipe(BaseModel):
     name: str
+    difficulty: int
     ingredients: List[Ingredient]
     description: List[Recipe_Description]
     user_id: Optional[int]
@@ -54,6 +55,7 @@ class User(BaseModel):
 class Token(BaseModel):
     access_token: str
     token_type: str
+    user_id: int
 
 class TokenData(BaseModel):
     username: Optional[str] = None
