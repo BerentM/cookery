@@ -8,7 +8,7 @@ from ..util.database import get_db
 
 router = APIRouter(
     prefix='/recipe',
-    tags=['recipes']
+    tags=['recipe']
 )
 
 
