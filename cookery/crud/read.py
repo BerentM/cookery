@@ -39,7 +39,7 @@ def recipe_description(id: int, db: Session)-> schema.Description_List:
     def parse_description(description):
         return schema.Recipe_Description(
             order = description.order,
-            description = description.description
+            name = description.description
             )
 
     recipe = single_recipe(id, db)

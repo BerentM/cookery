@@ -43,6 +43,6 @@ class Description(Base):
     id = Column(Integer, primary_key=True, index=True)
     recipe_id = Column(Integer, ForeignKey("recipes.id"), index=True)
     order = Column(Integer)
-    description = Column(String)
+    name = Column(String)
 
     recipe = relationship("Recipe", back_populates="description")

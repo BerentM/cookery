@@ -16,7 +16,7 @@ class Ingredient_List(BaseModel):
 
 class Recipe_Description(BaseModel):
     order: int
-    description: str
+    name: str
 
     class Config:
         orm_mode = True

@@ -20,7 +20,7 @@ def update_recipe(id: int, request_body: schema.New_Recipe, db: Session):
     for item in request_body.description:
             description = model.Description(
                 order=item.order,
-                description=item.description,
+                description=item.name,
                 recipe_id=id
                 )
             db.add(description)
