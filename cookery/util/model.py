@@ -5,6 +5,7 @@ from sqlalchemy.sql.sqltypes import LargeBinary
 
 from .database import Base
 
+
 class User(Base):
     __tablename__ = 'users'
 
@@ -13,6 +14,7 @@ class User(Base):
     password = Column(String)
 
     recipe = relationship("Recipe", back_populates="user")
+
 
 class Recipe(Base):
     __tablename__ = "recipes"
@@ -24,8 +26,13 @@ class Recipe(Base):
     image = Column(LargeBinary)
 
     user = relationship("User", back_populates="recipe", lazy="subquery")
-    description = relationship("Description", back_populates="recipe", lazy="subquery")
-    ingredients = relationship("Ingredient", back_populates="recipe", lazy="subquery")
+    description = relationship(
+        "Description", back_populates="recipe", lazy="subquery",
+    )
+    ingredients = relationship(
+        "Ingredient", back_populates="recipe", lazy="subquery",
+    )
+
 
 class Ingredient(Base):
     __tablename__ = "ingredients"
@@ -35,7 +42,8 @@ class Ingredient(Base):
     name = Column(String)
     quantity = Column(String)
 
-    recipe = relationship("Recipe", back_populates="ingredients")
+    recipe = relationship("Recipe", back_populates="ingredients",)
+
 
 class Description(Base):
     __tablename__ = "descriptions"

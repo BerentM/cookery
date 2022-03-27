@@ -10,9 +10,11 @@ class Ingredient(BaseModel):
     class Config:
         orm_mode = True
 
+
 class Ingredient_List(BaseModel):
     recipe_id: int
     ingredients: List[Ingredient]
+
 
 class Recipe_Description(BaseModel):
     order: int
@@ -21,9 +23,11 @@ class Recipe_Description(BaseModel):
     class Config:
         orm_mode = True
 
+
 class Description_List(BaseModel):
     recipe_id: int
     description: List[Recipe_Description]
+
 
 class New_Recipe(BaseModel):
     name: str
@@ -35,37 +39,44 @@ class New_Recipe(BaseModel):
     class Config:
         orm_mode = True
 
+
 class Recipe(New_Recipe):
     id: int
 
     class Config:
         orm_mode = True
 
+
 class Simple_Recipe(BaseModel):
     id: int
     name: str
     difficulty: int
     user_id: Optional[int]
-    #imgae: int
+    #image: int
 
     class Config:
         orm_mode = True
+
 
 class Sucess(BaseModel):
     status_code: int
     info: str
 
+
 class Login(BaseModel):
     username: str
     password: str
 
+
 class User(BaseModel):
     username: str
+
 
 class Token(BaseModel):
     access_token: str
     token_type: str
     user_id: int
+
 
 class TokenData(BaseModel):
     username: Optional[str] = None
