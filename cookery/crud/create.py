@@ -19,7 +19,7 @@ def add_recipe(request_body, db):
     for item in request_body.description:
         description = model.Description(
             order=item.order,
-            description=item.description,
+            name=item.name,
             recipe_id=recipe.id
         )
         db.add(description)
