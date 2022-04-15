@@ -1,5 +1,4 @@
 import datetime
-import configparser
 
 from fastapi import status
 from fastapi.exceptions import HTTPException
@@ -9,13 +8,12 @@ from jose import JWTError, jwt
 from passlib.context import CryptContext
 
 from typing import Dict
+from secrets import token_urlsafe
 
 PWD_CONTEXT = CryptContext(schemes=['bcrypt'], deprecated='auto')
-CONF = configparser.ConfigParser()
-CONF.read(r'./cookery/config.ini')
 
 # token reqirements
-SECRET_KEY = CONF['auth']['secret_key']
+SECRET_KEY = token_urlsafe(64)
 ALGORITHM = 'HS256'
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
