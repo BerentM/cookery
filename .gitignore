@@ -1,5 +1,6 @@
 __pycache__
 .env
+.linux_env
 cookery/data/database.db
 cookery/data/config.ini
 notes
