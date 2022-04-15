@@ -8,9 +8,11 @@ from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
 from passlib.context import CryptContext
 
+from typing import Dict
+
 PWD_CONTEXT = CryptContext(schemes=['bcrypt'], deprecated='auto')
 CONF = configparser.ConfigParser()
-CONF.read(r'cookery\config.ini')
+CONF.read(r'./cookery/config.ini')
 
 # token reqirements
 SECRET_KEY = CONF['auth']['secret_key']
@@ -32,7 +34,7 @@ class Hash:
 
 class JWT:
     @staticmethod
-    def create(data: dict):
+    def create(data: Dict):
         to_encode = data.copy()
         expire = datetime.datetime.utcnow() +\
             datetime.timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)

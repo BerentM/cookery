@@ -3,6 +3,8 @@ from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 from cookery.util import model, schema
 
+from typing import List, Dict
+
 
 def single_recipe(id: int, db: Session) -> schema.Recipe:
     recipe = db.query(model.Recipe).get(id)
@@ -55,7 +57,7 @@ def recipe_description(id: int, db: Session) -> schema.Description_List:
     )
 
 
-def recipe_list(id_from: int, id_to: int, db: Session) -> list[schema.Recipe]:
+def recipe_list(id_from: int, id_to: int, db: Session) -> List[schema.Recipe]:
     recipes = db.query(model.Recipe).order_by(
         model.Recipe.id).offset(id_from).limit(id_to).all()
     output = []
@@ -71,7 +73,7 @@ def recipe_list(id_from: int, id_to: int, db: Session) -> list[schema.Recipe]:
     return output
 
 
-def recipe_simple_list(db: Session) -> list[schema.Simple_Recipe]:
+def recipe_simple_list(db: Session) -> List[schema.Simple_Recipe]:
     recipes = db.query(model.Recipe).order_by(model.Recipe.id).all()
     output = []
 
@@ -97,7 +99,7 @@ def get_user(id: int, db: Session) -> schema.User:
     return schema.User(username=user.username)
 
 
-def about() -> dict:
+def about() -> Dict:
     return {
         'purpose': 'Cookery API was created to provide comfortable solution for storing cooking recipes.',
         'usage': 'Look at /docs for endpoints documentation.',
