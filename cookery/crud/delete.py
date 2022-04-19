@@ -7,11 +7,11 @@ from fastapi import Response, HTTPException
 
 def delete_recipe(id: int, db: Session):
     if db.query(model.Recipe).filter(model.Recipe.id == id).first():
-        db.query(model.Recipe).filter(model.Recipe.id == id).delete()
         db.query(model.Ingredient).filter(
             model.Ingredient.recipe_id == id).delete()
         db.query(model.Description).filter(
             model.Description.recipe_id == id).delete()
+        db.query(model.Recipe).filter(model.Recipe.id == id).delete()
         db.commit()
         return Response(status_code=status.HTTP_204_NO_CONTENT)
 
