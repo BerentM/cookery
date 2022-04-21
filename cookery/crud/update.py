@@ -13,7 +13,8 @@ def update_recipe(id: int, request_body: schema.New_Recipe, db: Session):
     db.query(model.Recipe).filter(model.Recipe.id == id).update(
         {
             model.Recipe.name: request_body.name,
-            model.Recipe.user_id: request_body.user_id
+            model.Recipe.user_id: request_body.user_id,
+            model.Recipe.difficulty: request_body.difficulty
         })
 
     db.query(model.Ingredient).filter(
