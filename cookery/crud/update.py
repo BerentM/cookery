@@ -14,7 +14,8 @@ def update_recipe(id: int, request_body: schema.New_Recipe, db: Session):
         {
             model.Recipe.name: request_body.name,
             model.Recipe.user_id: request_body.user_id,
-            model.Recipe.difficulty: request_body.difficulty
+            model.Recipe.difficulty: request_body.difficulty,
+            model.Recipe.image: request_body.image
         })
 
     db.query(model.Ingredient).filter(

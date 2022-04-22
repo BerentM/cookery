@@ -11,7 +11,7 @@ def add_recipe(request_body, db):
             detail=f"recipe {request_body.name=} already exists"
         )
     recipe = model.Recipe(name=request_body.name, user_id=request_body.user_id,
-                          difficulty=request_body.difficulty)
+                          difficulty=request_body.difficulty, image=request_body.image)
     db.add(recipe)
     db.commit()
     db.refresh(recipe)
