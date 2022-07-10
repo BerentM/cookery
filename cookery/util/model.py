@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql.schema import ForeignKey
-from sqlalchemy.sql.sqltypes import LargeBinary
+from sqlalchemy.sql.sqltypes import TEXT
 
 from .database import Base
 
@@ -23,7 +23,7 @@ class Recipe(Base):
     name = Column(String, unique=True)
     user_id = Column(Integer, ForeignKey("users.id"), index=True)
     difficulty = Column(Integer)
-    image = Column(LargeBinary)
+    image = Column(TEXT)
 
     user = relationship("User", back_populates="recipe", lazy="subquery")
     description = relationship(

@@ -35,6 +35,7 @@ class New_Recipe(BaseModel):
     ingredients: List[Ingredient]
     description: List[Recipe_Description]
     user_id: Optional[int]
+    image: str
 
     class Config:
         orm_mode = True
@@ -52,7 +53,7 @@ class Simple_Recipe(BaseModel):
     name: str
     difficulty: int
     user_id: Optional[int]
-    #image: int
+    image: str
 
     class Config:
         orm_mode = True

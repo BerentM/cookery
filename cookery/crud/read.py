@@ -19,7 +19,8 @@ def single_recipe(id: int, db: Session) -> schema.Recipe:
         user_id=recipe.user_id,
         difficulty=recipe.difficulty,
         ingredients=recipe.ingredients,
-        description=recipe.description
+        description=recipe.description,
+        image=recipe.image,
     )
 
 
@@ -69,6 +70,7 @@ def recipe_list(id_from: int, id_to: int, db: Session) -> List[schema.Recipe]:
             "user_id": recipe.user_id,
             "ingredients": recipe.ingredients,
             "description": recipe.description,
+            "image": recipe.image,
         })
     return output
 
@@ -84,6 +86,7 @@ def recipe_simple_list(db: Session) -> List[schema.Simple_Recipe]:
                 name=recipe.name,
                 difficulty=recipe.difficulty,
                 user_id=recipe.user_id,
+                image=recipe.image,
             )
         )
     return output
